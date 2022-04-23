@@ -14,15 +14,15 @@ struct Tile {
     down:  Passage
 }
 
+const ROW_NUM: u8 = 5;
+const COL_NUM: u8 = ROW_NUM;
+
 fn main() {
     let mut rng = rand::thread_rng();
 
-    let tiles: Vec<Tile> =
-        (0..5).into_iter()
-            .map(|_| rand_tile(&mut rng))
-            .collect();
-
-    print_tiles(&tiles);
+    for _ in 0..ROW_NUM {
+        print_tiles(&rand_row(&mut rng));
+    }
 }
 
 /**** print_tiles() ****/
@@ -139,4 +139,13 @@ impl From<bool> for Passage {
             false => Passage::Closed,
         }
     }
+}
+
+fn rand_row<R: Rng>(rng: &mut R) -> Vec<Tile> {
+    let row: Vec<Tile> =
+        (0..COL_NUM).into_iter()
+            .map(|_| rand_tile(rng))
+            .collect();
+
+    return row;
 }
